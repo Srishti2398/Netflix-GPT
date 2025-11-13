@@ -10,6 +10,7 @@ import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { USER_AVATAR } from '../utils/constants';
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -41,7 +42,7 @@ const Login = () => {
           // ✅ Important: wait for profile update to complete
           updateProfile(user, {
             displayName: name.current.value,
-            photoURL: "https://cdn-icons-png.flaticon.com/512/847/847969.png", // better placeholder image
+            photoURL: USER_AVATAR, // better placeholder image
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = auth.currentUser;
@@ -66,9 +67,7 @@ const Login = () => {
       signInWithEmailAndPassword(auth, email.current.value, password.current.value)
         .then((userCredential) => {
           const user = userCredential.user;
-          //dispatch(addUser({ uid, email, displayName, photoURL })); // ✅ Add this
-          console.log("Signed in:", user);
-          navigate("/browse");
+
         })
         .catch((error) => {
           const errorCode = error.code;
